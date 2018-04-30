@@ -12,7 +12,18 @@ app.use(bodyParser.json());
 
 // ** Routes **
 app.post("/todos", (req, res) => {
-  console.log(req.body);
+  let todo = new Todo({
+    text: req.body.text
+  });
+
+  todo.save(
+    doc => {
+      res.send(doc);
+    },
+    e => {
+      res.status(400).send(e);
+    }
+  );
 });
 
 app.listen(3000, () => {
